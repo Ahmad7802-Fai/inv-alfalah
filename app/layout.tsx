@@ -2,80 +2,42 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-/* ============================= */
-/* 🎨 FONT SYSTEM */
-/* ============================= */
+/* 🎨 FONT */
 const headingFont = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-heading",
-  display: "swap",
 });
 
 const bodyFont = Inter({
   subsets: ["latin"],
   variable: "--font-body",
-  display: "swap",
 });
 
-/* ============================= */
-/* 🌐 METADATA (SEO + WA PREVIEW) */
-/* ============================= */
+/* 🌐 METADATA */
 export const metadata: Metadata = {
   metadataBase: new URL("https://inv-alfalah.vercel.app"),
 
-  title: {
-    default: "Undangan Haflah Al-Falah",
-    template: "%s | Undangan Digital",
-  },
-
-  description:
-    "Undangan Haflah Attasyakur Ponpes Al-Falah Assholihaat. Kami mengundang Anda untuk hadir.",
-
-  keywords: [
-    "undangan digital",
-    "haflah",
-    "pondok pesantren",
-    "undangan islami",
-    "undangan online",
-  ],
-
-  authors: [{ name: "Al-Falah" }],
-  creator: "Al-Falah",
+  title: "Undangan Haflah Al-Falah",
+  description: "Undangan Haflah Attasyakur Ponpes Al-Falah Assholihaat",
 
   openGraph: {
     title: "Undangan Haflah Al-Falah",
-    description:
-      "Kami mengundang Anda untuk hadir dalam Haflah Attasyakur Ponpes Al-Falah Assholihaat.",
+    description: "Kami mengundang Anda untuk hadir",
     url: "https://inv-alfalah.vercel.app",
     siteName: "Undangan Digital",
     images: [
       {
-        url: "/cover.jpg", // wajib ada di /public
+        url: "/cover.jpg",
         width: 1200,
         height: 630,
-        alt: "Undangan Haflah Al-Falah",
       },
     ],
     locale: "id_ID",
     type: "website",
   },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Undangan Haflah Al-Falah",
-    description:
-      "Undangan Haflah Attasyakur Ponpes Al-Falah Assholihaat",
-    images: ["/cover.jpg"],
-  },
-
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
-/* ============================= */
-/* 🧱 ROOT LAYOUT */
-/* ============================= */
+/* 🧱 LAYOUT */
 export default function RootLayout({
   children,
 }: {
@@ -86,11 +48,19 @@ export default function RootLayout({
       lang="id"
       className={`${headingFont.variable} ${bodyFont.variable}`}
     >
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="bg-background text-foreground antialiased">
 
-        {/* 🌿 MAIN WRAPPER */}
-        <div className="relative z-10">
-          {children}
+        {/* 🌿 GLOBAL WRAPPER */}
+        <div className="relative min-h-screen overflow-hidden">
+
+          {/* subtle overlay gradient */}
+          <div className="pointer-events-none fixed inset-0 bg-gradient-to-b from-transparent to-white/40" />
+
+          {/* CONTENT */}
+          <div className="relative z-10">
+            {children}
+          </div>
+
         </div>
 
       </body>

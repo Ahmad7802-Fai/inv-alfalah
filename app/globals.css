@@ -6,28 +6,35 @@
 :root {
   --background: #f8f5f0;
   --foreground: #1a1a1a;
-  --primary: #166534; /* hijau islami */
+
+  --primary: #166534;
   --primary-dark: #14532d;
-  --accent: #d4af37; /* gold */
+
+  --accent: #d4af37;
 }
 
 /* ============================= */
-/* 🔤 FONT SYSTEM (SYNC LAYOUT) */
+/* 🔤 FONT SYSTEM (SYNC NEXT FONT) */
 /* ============================= */
-h1, h2, h3 {
-  font-family: var(--font-heading);
-  letter-spacing: 0.5px;
+html {
+  font-family: var(--font-body);
 }
 
 body {
-  font-family: var(--font-body);
   background: linear-gradient(to bottom, #f8f5f0, #ffffff);
   color: var(--foreground);
   overflow-x: hidden;
+  position: relative;
+}
+
+/* heading premium */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.4px;
 }
 
 /* ============================= */
-/* 🕌 ORNAMEN ISLAMI */
+/* 🕌 ORNAMEN ISLAMI SAMPING */
 /* ============================= */
 body::before,
 body::after {
@@ -37,7 +44,7 @@ body::after {
   width: 60px;
   height: 100%;
   background: url('/pattern.png') repeat-y;
-  opacity: 0.08; /* lebih soft premium */
+  opacity: 0.06;
   pointer-events: none;
   z-index: 0;
 }
@@ -51,15 +58,28 @@ body::after {
 }
 
 /* ============================= */
-/* 💎 CARD (GLASS PREMIUM) */
+/* 💎 CARD GLASS PREMIUM */
 /* ============================= */
 .card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
   border-radius: 24px;
-  padding: 20px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
-  border: 1px solid rgba(255,255,255,0.4);
+  padding: 22px;
+
+  border: 1px solid rgba(255,255,255,0.5);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.06),
+    0 4px 10px rgba(0,0,0,0.04);
+
+  transition: all 0.35s ease;
+}
+
+/* hover feel premium */
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.08),
+    0 10px 20px rgba(0,0,0,0.05);
 }
 
 /* ============================= */
@@ -68,17 +88,20 @@ body::after {
 .btn-primary {
   background: var(--primary);
   color: white;
-  padding: 12px 28px;
+
+  padding: 12px 30px;
   border-radius: 999px;
-  transition: all 0.35s ease;
+
   font-weight: 500;
   letter-spacing: 0.5px;
+
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
   transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.1);
 }
 
 /* ============================= */
@@ -90,23 +113,23 @@ body::after {
   animation: fade 1.2s ease forwards;
 }
 
-/* fade naik (utama) */
+/* fade naik cinematic */
 .animate-fade-up {
   animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* zoom elegan */
+/* zoom elegant */
 .animate-zoom {
   animation: zoomSoft 0.8s ease forwards;
 }
 
-/* cinematic open */
+/* opening cinematic */
 .animate-open {
   animation: openPage 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ============================= */
-/* ⏱ DELAY SYSTEM (IMPORTANT) */
+/* ⏱ DELAY SYSTEM */
 /* ============================= */
 .delay-1 { animation-delay: 0.4s; opacity: 0; }
 .delay-2 { animation-delay: 0.8s; opacity: 0; }
@@ -158,14 +181,28 @@ body::after {
 }
 
 /* ============================= */
-/* 🌿 SMOOTH SCROLL */
+/* 🌫 CINEMATIC EFFECT */
+/* ============================= */
+
+/* blur layer */
+.blur-bg {
+  backdrop-filter: blur(12px);
+}
+
+/* smooth scene transition */
+.scene {
+  transition: all 0.7s ease;
+}
+
+/* ============================= */
+/* 🌿 SCROLL */
 /* ============================= */
 html {
   scroll-behavior: smooth;
 }
 
 /* ============================= */
-/* 📱 MEDIA FIX */
+/* 📱 MEDIA */
 /* ============================= */
 img {
   display: block;
@@ -174,25 +211,38 @@ img {
 }
 
 /* ============================= */
-/* 🎯 PREMIUM TOUCH */
+/* 🎯 UI UTILITIES */
 /* ============================= */
 
-/* subtle divider */
+/* divider gold */
 .divider {
   width: 60px;
   height: 2px;
-  background: var(--accent);
-  margin: 16px auto;
+  background: linear-gradient(to right, #d4af37, #b8962e);
+  margin: 14px auto;
+  border-radius: 999px;
 }
 
-/* text highlight */
+/* text gold */
 .text-accent {
   color: var(--accent);
 }
 
-/* Arabic style */
+/* arabic font */
 .arabic {
-  font-family: 'Amiri', serif;
-  font-size: 22px;
-  line-height: 2;
+  font-family: "Amiri", serif;
+  font-size: 24px;
+  line-height: 2.2;
+  letter-spacing: 0.5px;
+}
+
+/* ============================= */
+/* 🧼 RESET MINOR */
+/* ============================= */
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
 }
