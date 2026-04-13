@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
+/* ============================= */
+/* 🎨 ROOT DESIGN SYSTEM */
+/* ============================= */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f5f0;
+  --foreground: #1a1a1a;
+  --primary: #166534; /* hijau islami */
+  --primary-dark: #14532d;
+  --accent: #d4af37; /* gold */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================= */
+/* 🔤 FONT SYSTEM (SYNC LAYOUT) */
+/* ============================= */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.5px;
 }
 
 body {
-  background: var(--background);
+  font-family: var(--font-body);
+  background: linear-gradient(to bottom, #f8f5f0, #ffffff);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================= */
+/* 🕌 ORNAMEN ISLAMI */
+/* ============================= */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  background: url('/pattern.png') repeat-y;
+  opacity: 0.08; /* lebih soft premium */
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  left: 0;
+}
+
+body::after {
+  right: 0;
+}
+
+/* ============================= */
+/* 💎 CARD (GLASS PREMIUM) */
+/* ============================= */
+.card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* ============================= */
+/* ✨ BUTTON PREMIUM */
+/* ============================= */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 999px;
+  transition: all 0.35s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* ============================= */
+/* 🎬 ANIMATION SYSTEM */
+/* ============================= */
+
+/* fade basic */
+.animate-fade {
+  animation: fade 1.2s ease forwards;
+}
+
+/* fade naik (utama) */
+.animate-fade-up {
+  animation: fadeUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* zoom elegan */
+.animate-zoom {
+  animation: zoomSoft 0.8s ease forwards;
+}
+
+/* cinematic open */
+.animate-open {
+  animation: openPage 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================= */
+/* ⏱ DELAY SYSTEM (IMPORTANT) */
+/* ============================= */
+.delay-1 { animation-delay: 0.4s; opacity: 0; }
+.delay-2 { animation-delay: 0.8s; opacity: 0; }
+.delay-3 { animation-delay: 1.2s; opacity: 0; }
+.delay-4 { animation-delay: 1.6s; opacity: 0; }
+
+/* ============================= */
+/* 🎥 KEYFRAMES */
+/* ============================= */
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomSoft {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes openPage {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ============================= */
+/* 🌿 SMOOTH SCROLL */
+/* ============================= */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ============================= */
+/* 📱 MEDIA FIX */
+/* ============================= */
+img {
+  display: block;
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+/* ============================= */
+/* 🎯 PREMIUM TOUCH */
+/* ============================= */
+
+/* subtle divider */
+.divider {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  margin: 16px auto;
+}
+
+/* text highlight */
+.text-accent {
+  color: var(--accent);
+}
+
+/* Arabic style */
+.arabic {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  line-height: 2;
 }

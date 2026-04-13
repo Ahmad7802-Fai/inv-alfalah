@@ -1,65 +1,236 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { QRCodeCanvas } from "qrcode.react";
 
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const [scene, setScene] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const params = useSearchParams();
+
+  const nama = params.get("to") || "Tamu Undangan";
+
+  // 🎵 AUDIO FADE IN
+  const playMusic = async () => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.volume = 0;
+        await audioRef.current.play();
+
+        let vol = 0;
+        const fade = setInterval(() => {
+          if (!audioRef.current) return;
+          if (vol < 0.4) {
+            vol += 0.02;
+            audioRef.current.volume = vol;
+          } else {
+            clearInterval(fade);
+          }
+        }, 200);
+      }
+    } catch {}
+  };
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+    audioRef.current.paused
+      ? audioRef.current.play()
+      : audioRef.current.pause();
+  };
+
+  // 🎬 SCENE FLOW CINEMATIC
+  useEffect(() => {
+    if (open) {
+      const timers = [
+        setTimeout(() => setScene(1), 1000),
+        setTimeout(() => setScene(2), 4000),
+        setTimeout(() => setScene(3), 7000),
+        setTimeout(() => setScene(4), 10000),
+        setTimeout(() => setScene(5), 13000),
+      ];
+
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [open]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* AUDIO */}
+      <audio ref={audioRef} loop>
+        <source
+          src="/audio/nastelbom-islamic-islamic-music-489179.mp3"
+          type="audio/mpeg"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+      </audio>
+
+      {/* ================= COVER ================= */}
+      {!open ? (
+        <div className="h-screen flex flex-col justify-center items-center text-center p-6 bg-gradient-to-b from-green-50 to-white">
+
+          <div className="card animate-zoom">
+
+            <p className="text-green-600 tracking-[4px] text-sm">
+              UNDANGAN
+            </p>
+
+            <h1 className="text-4xl font-bold mt-4 text-green-900">
+              Haflah Attasyakur
+            </h1>
+
+            <div className="divider" />
+
+            <p className="text-sm text-gray-500 mt-4">
+              Kepada Yth:
+            </p>
+
+            <h2 className="text-xl font-semibold text-green-800 mt-1">
+              {nama}
+            </h2>
+
+            <button
+              onClick={() => {
+                setOpen(true);
+                playMusic();
+              }}
+              className="btn-primary mt-6"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              Buka Undangan
+            </button>
+
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      ) : (
+        /* ================= SCENE SYSTEM ================= */
+        <main className="h-screen w-full overflow-hidden relative">
+
+          {/* 🎬 SCENE 1 - BISMILLAH */}
+          {scene === 1 && (
+            <div className="h-screen flex items-center justify-center text-center animate-open">
+              <p className="arabic text-3xl text-green-800">
+                بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+              </p>
+            </div>
+          )}
+
+          {/* 🎬 SCENE 2 - OPENING */}
+          {scene === 2 && (
+            <div className="h-screen flex items-center justify-center p-6">
+              <div className="card animate-fade-up max-w-md text-center">
+
+                <p className="italic text-lg text-green-800">
+                  Assalamu’alaikum Warahmatullahi Wabarakatuh
+                </p>
+
+                <p className="mt-4 text-gray-700">
+                  Dengan memohon rahmat dan ridho Allah SWT,
+                  kami mengundang Bapak/Ibu/Saudara/i untuk hadir
+                  dalam acara Haflah Attasyakur Likhotmil Qur’an Wal Kutub.
+                </p>
+
+                <p className="mt-4 text-sm italic text-gray-500">
+                  "Dan Allah menjadikan bagi kamu pasangan hidup..."
+                </p>
+
+              </div>
+            </div>
+          )}
+
+          {/* 🎬 SCENE 3 - DETAIL */}
+          {scene === 3 && (
+            <div className="h-screen flex items-center justify-center p-6">
+              <div className="card animate-fade-up text-center">
+
+                <p className="font-bold text-lg text-green-800">
+                  Hari & Tanggal
+                </p>
+
+                <div className="divider" />
+
+                <p className="mt-2">
+                  Sabtu Pahing & Ahad Pon
+                </p>
+
+                <p className="mt-3 font-semibold text-green-700 text-lg">
+                  25 April 2026 - 19:30 WIB
+                </p>
+
+                <p>
+                  26 April 2026 - 07:30 WIB
+                </p>
+
+              </div>
+            </div>
+          )}
+
+          {/* 🎬 SCENE 4 - RANGKAIAN */}
+          {scene === 4 && (
+            <div className="h-screen flex items-center justify-center p-6">
+              <div className="space-y-4">
+
+                <p className="font-bold text-green-800 text-lg text-center">
+                  Rangkaian Acara
+                </p>
+
+                {[
+                  ["Jumat, 24 April", "Ziarah"],
+                  ["Sabtu, 25 April", "Khataman & Pengajian"],
+                  ["Ahad, 26 April", "Sholawat"],
+                ].map((item, i) => (
+                  <div key={i} className="card text-center">
+                    <p className="font-semibold text-green-800">
+                      {item[0]}
+                    </p>
+                    <p className="text-gray-600">
+                      {item[1]}
+                    </p>
+                  </div>
+                ))}
+
+              </div>
+            </div>
+          )}
+
+          {/* 🎬 SCENE 5 - GALERI + MAP */}
+          {scene === 5 && (
+            <div className="h-screen flex flex-col items-center justify-center p-6 space-y-6">
+
+              <div className="grid grid-cols-2 gap-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <img
+                    key={i}
+                    src={`https://picsum.photos/300/200?random=${i}`}
+                    className="rounded-xl shadow"
+                  />
+                ))}
+              </div>
+
+              <QRCodeCanvas
+                value="https://maps.google.com/?q=ponpes+alfalah"
+                size={120}
+              />
+
+              <iframe
+                src="https://www.google.com/maps?q=ponpes+alfalah&output=embed"
+                className="w-full h-40 rounded-xl"
+              />
+
+            </div>
+          )}
+
+        </main>
+      )}
+
+      {/* 🎵 BUTTON MUSIC */}
+      {open && (
+        <button
+          onClick={toggleMusic}
+          className="fixed bottom-4 right-4 bg-green-700 text-white px-4 py-3 rounded-full shadow-lg"
+        >
+          🎵
+        </button>
+      )}
+    </>
   );
 }
